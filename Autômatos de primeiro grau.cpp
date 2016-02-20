@@ -10,6 +10,44 @@
 
 
 /*
+Tarefas concluídas:
+	Classe AFND, AFD e Autômatos, Reinaldo
+
+Tarefas a serem feitas:
+	1) Criar nova classe AFNDG (Com um novo estado inicial e um estado final fixo) ou criar método que transforma de AFND em AFNDG - Reinaldo
+	2) Funções de busca
+
+		Interessante usarmos sobrecarga de método aqui.
+
+		Sch(qi,a,qj,M0) = {(qi,a,qj) : (qi,a,qj) ? ?} (1.8)
+
+		Sch(qi,qj,M0) = {(qi,a,qj) : (qi,a,qj) ? ?} (1.9)
+
+		Sch(qi,M0) = {(qi,a,q00) : (qi,a,q00) ? ?} (1.10)
+
+		Sch(qj,M0) = {(q0,a,qj) : (q0,a,qj) ? ?} (1.11)
+
+		Sch(qi,a,M0) = {(qi,a,q00) : qi,a,q00) ? ?} (1.12)
+
+		Sch(qj,a,M0) = {(q0,a,qj) : (q0,a,qj) ? ?} (1.13)
+
+		Sch(a,M0) = {(q0,a,q00) : (q0,a,q00) ? ?} (1.14)
+	3) Função de inserção
+	4) Função de remoção
+	5) Sequência positiva e sequência negativa
+	6) Criar um par ordenado tal que (Sequência positiva, sequência negativa)
+
+
+Recados:
+
+Galera se sintam a vontade para modificar ou para tomar iniciativas.
+Não precisamos nos limitar ao ponto de estabelecer uma liderança para a parte de implementação e sim cada um tomando a iniciativa quando achar conveniente.
+
+Conforme forem concluindo nossas metas coloquem elas na parte de metas concluídas e que foi você que fez para que saibamos com quem falar como exemplifiquei.
+Detalhes sobre a implementação e discursões sobre a engenharia de software acho legal fazer no face para se tornar mais dinâmico.
+
+
+
 Ex de entrada:
 
 2

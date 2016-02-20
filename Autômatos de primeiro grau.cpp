@@ -8,6 +8,7 @@
 #define fore(i,n) for(int i = 0; i < n; i++)
 #define TAM 7
 
+//Teste
 
 /*
 Ex de entrada:

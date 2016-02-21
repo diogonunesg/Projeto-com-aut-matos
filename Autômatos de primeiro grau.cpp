@@ -10,8 +10,6 @@
 
 
 /*
-Tarefa em andamento:
-    AFNDG
 
 Tarefas concluídas:
 	Classe AFND, AFD e Autômatos, Reinaldo

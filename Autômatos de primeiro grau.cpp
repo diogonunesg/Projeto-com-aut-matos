@@ -10,12 +10,16 @@
 
 
 /*
+Tarefa em andamento:
+    AFNDG
+
 Tarefas concluídas:
 	Classe AFND, AFD e Autômatos, Reinaldo
+	Criar nova classe AFNDG (Com um novo estado inicial e um estado final fixo) ou criar método que transforma de AFND em AFNDG - Reinaldo
 
 Tarefas a serem feitas:
-	1) Criar nova classe AFNDG (Com um novo estado inicial e um estado final fixo) ou criar método que transforma de AFND em AFNDG - Reinaldo
-	2) Funções de busca
+
+	1) Funções de busca
 
 		Interessante usarmos sobrecarga de método aqui.
 
@@ -32,10 +36,10 @@ Tarefas a serem feitas:
 		Sch(qj,a,M0) = {(q0,a,qj) : (q0,a,qj) ? ?} (1.13)
 
 		Sch(a,M0) = {(q0,a,q00) : (q0,a,q00) ? ?} (1.14)
-	3) Função de inserção
-	4) Função de remoção
-	5) Sequência positiva e sequência negativa
-	6) Criar um par ordenado tal que (Sequência positiva, sequência negativa)
+	2) Função de inserção
+	3) Função de remoção
+	4) Sequência positiva e sequência negativa
+	5) Criar um par ordenado tal que (Sequência positiva, sequência negativa)
 
 
 Recados:
@@ -52,20 +56,21 @@ Ex de entrada:
 
 2
 0 1
-4
-q1 q2 q3 q4
 3
-q1 u q2
-q2 u q3
-q3 0 q4
+q1 q2 q3
+7
+q1 0 q2
+q1 1 q2
+q2 1 q2
+q2 0 q1
+q2 1 q3
+q3 0 q2
+q3 u q1
 1
 q1
 1
-q4
+q2
 AFND 1
-
-
-
 
 */
 
@@ -92,6 +97,45 @@ public:
         tabelaDeTransicoes = C;
         estadosIniciais = D;
         estadosFinais = E;
+        toANFDG();
+    }
+    void toANFDG(){
+
+        vector< bitset<TAM> > aux(Alfabeto.size());
+        //vector< vector< bitset<TAM> > > aux(1, vector< bitset<TAM> >(Alfabeto.size()));
+        tabelaDeTransicoes.push_back(aux);
+        tabelaDeTransicoes.push_back(aux);
+        int posicaoInicial = Estados.size();
+        pair <string, int> estadoInicial ("Inicial", posicaoInicial);
+        Estados.insert(estadoInicial);
+        int posicaoFinal = Estados.size();
+        pair <string, int> estadoFinal ("Final", posicaoFinal);
+        Estados.insert(estadoFinal);
+
+        map <string, int> :: iterator it;
+        it = estadosIniciais.begin();
+        bitset <TAM> auxInicial;
+        for(it ; it != estadosIniciais.end(); it++){
+            auxInicial[it->second] = 1;
+        }
+        tabelaDeTransicoes[posicaoInicial][Alfabeto.size() - 1] = auxInicial;
+
+        it = estadosFinais.begin();
+
+        bitset <TAM> auxFinal;
+        for(it ; it != estadosFinais.end(); it++){
+            auxFinal[it->second] = 1;
+        }
+
+        tabelaDeTransicoes[posicaoFinal][Alfabeto.size() - 1] = auxFinal;
+
+        estadosIniciais.clear();
+        estadosFinais.clear();
+        estadosIniciais.insert(estadoInicial);
+        estadosFinais.insert(estadoFinal);
+
+
+
     }
 
     void getEstados()
@@ -413,6 +457,7 @@ int main()
     map <string, int> Alfabeto;
     map <string,int> Estados;
 
+
     //Quantidade de símbolos no alfabeto
     int qtdAlfabeto, qtdEstados, qtdTransicoes;
     cin >> qtdAlfabeto;
@@ -466,6 +511,12 @@ int main()
     {
         string estadoInicial;
         cin >> estadoInicial;
+        map <string, int> :: iterator it;
+        int auxFinal;
+        it = Estados.begin();
+        for(it ; it != Estados.end(); it++){
+            if(it->first == estadoInicial) auxFinal = it->second;
+        }
         estadosIniciais.insert(pair<string,int> (estadoInicial, i));
     }
 
@@ -478,7 +529,13 @@ int main()
     {
         string estadoFinal;
         cin >> estadoFinal;
-        estadosFinais.insert(pair<string,int> (estadoFinal, i));
+        int auxFinal;
+        map <string, int> :: iterator it;
+        it = Estados.begin();
+        for(it ; it != Estados.end(); it++){
+            if(it->first == estadoFinal) auxFinal = it->second;
+        }
+        estadosFinais.insert(pair<string,int> (estadoFinal, auxFinal));
 
     }
     //Um nome para o autômato
@@ -488,19 +545,14 @@ int main()
  //Tratar o vazio
     string simbolo = "-1";
     int simboloid = (Alfabeto.find(simbolo))->second;
-    trataVazio(grafo, simboloid, qtdEstados, qtdAlfabeto);
+    //trataVazio(grafo, simboloid, qtdEstados, qtdAlfabeto);
 
     AFND novo = AFND(nome, Alfabeto, Estados, grafo,estadosIniciais, estadosFinais);
 
     //Transformando um AFND em AFD
-    AFD teste = novo.AFND2FND();
-    teste.getEstados();
-    cout << endl;
-    teste.estadosIniciais;
-    cout << endl;
-    teste.getTabelaTransicao();
-    cout << endl;
-    teste.getEstadosFinais();
+    novo.getEstados();
+    novo.getEstadosFinais();
+    novo.getTabelaTransicao();
 
     /*   */
 }
